@@ -1,0 +1,4 @@
+rootProject.name = 'heowc'
+include 'ThreadPool'
+findProject(':ThreadPool')?.name = 'threadpool'
+
