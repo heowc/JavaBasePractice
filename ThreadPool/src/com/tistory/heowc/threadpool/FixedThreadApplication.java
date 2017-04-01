@@ -8,13 +8,23 @@ import java.util.stream.IntStream;
 public class FixedThreadApplication {
 
     public static void main(String [] args) {
-        ThreadPoolExecutor executorService = (ThreadPoolExecutor) Executors.newFixedThreadPool(2);
+        ThreadPoolExecutor executorService = (ThreadPoolExecutor) Executors.newFixedThreadPool(5);
 
-        IntStream.range(0, 10)
-                .mapToObj(value -> executorService.submit(() -> String.valueOf(value * 2)))
+        IntStream.range(0, 100)
+                .mapToObj(value -> executorService.submit(() -> {
+                    try {
+                        if (value%2 == 0) {
+                            Thread.sleep(1000L);
+                        }
+
+                        return String.valueOf(value * 2);
+                    } catch (InterruptedException e) {
+                        return "";
+                    }
+                }))
                 .forEach(action -> {
                     try {
-                        System.out.println("Pool Size    : " + executorService.getPoolSize());
+                        System.out.println("Thread Info  : " + executorService.toString());
                         System.out.println("Result Value : " + action.get());
                     } catch (InterruptedException | ExecutionException e) {
                         e.printStackTrace();
