@@ -1,4 +1,6 @@
 rootProject.name = 'heowc'
 include 'ThreadPool'
 findProject(':ThreadPool')?.name = 'threadpool'
+include 'BlockingQueue'
+findProject(':BlockingQueue')?.name = 'blockingqueue'
 
