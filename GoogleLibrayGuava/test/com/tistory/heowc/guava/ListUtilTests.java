@@ -1,4 +1,4 @@
-package com.tistory.heowc.quava;
+package com.tistory.heowc.guava;
 
 import com.google.common.collect.Lists;
 import org.junit.Test;
