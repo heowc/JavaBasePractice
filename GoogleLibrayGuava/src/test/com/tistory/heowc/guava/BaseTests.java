@@ -1,11 +1,15 @@
 package com.tistory.heowc.guava;
 
 import com.google.common.base.*;
+import com.google.common.collect.Maps;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Map;
+
+import static com.google.common.base.Joiner.on;
 import static com.google.common.primitives.UnsignedInts.parseUnsignedInt;
 
 public class BaseTests {
@@ -54,9 +58,33 @@ public class BaseTests {
     }
 
     @Test
-    public void test_spliter() throws Exception {
+    public void test_splitter() throws Exception {
         Splitter splitter = Splitter.on(";");
         splitter.split("heo;won;chul").forEach(System.out::println);
+    }
+
+    @Test
+    public void test_joinerMapJoiner() throws Exception {
+        Joiner.MapJoiner mapJoiner = Joiner.on("&").withKeyValueSeparator("=");
+
+        Map<String, String> map = Maps.newHashMap();
+        map.put("key", "param");
+        map.put("key2", "param2");
+
+        Assert.assertEquals(mapJoiner.join(map), "key2=param2&key=param");
+    }
+
+    @Test
+    public void test_splitterMapSplitter() throws Exception {
+        Splitter.MapSplitter mapSplitter = Splitter.on("&").withKeyValueSeparator("=");
+
+        Map<String, String> map = Maps.newHashMap();
+        map.put("key", "param");
+        map.put("key2", "param2");
+
+        Map<String, String> map2 = mapSplitter.split("key2=param2&key=param");
+
+        Assert.assertEquals(map.get("key"), map2.get("key"));
     }
 
     @After
