@@ -3,6 +3,6 @@ include 'ThreadPool'
 findProject(':ThreadPool')?.name = 'threadpool'
 include 'BlockingQueue'
 findProject(':BlockingQueue')?.name = 'blockingqueue'
-include 'GoogleLibrayQuava'
+include 'GoogleLibrayGuava'
 findProject(':GoogleLibrayGuava')?.name = 'guava'
 
