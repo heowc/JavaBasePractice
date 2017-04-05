@@ -5,4 +5,6 @@ include 'BlockingQueue'
 findProject(':BlockingQueue')?.name = 'blockingqueue'
 include 'GoogleLibrayGuava'
 findProject(':GoogleLibrayGuava')?.name = 'guava'
+include 'DataStructure'
+findProject(':DataStructure')?.name = 'datastructure'
 
