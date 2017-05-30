@@ -7,4 +7,6 @@ include 'GoogleLibrayGuava'
 findProject(':GoogleLibrayGuava')?.name = 'guava'
 include 'DataStructure'
 findProject(':DataStructure')?.name = 'datastructure'
+include 'Lombok'
+findProject(':Lombok')?.name = 'lombok'
 
