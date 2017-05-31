@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 public class PersonTest {
 
@@ -19,9 +21,20 @@ public class PersonTest {
 
     @Test
     public void test_builder() throws Exception {
-        Person person = Person.of("wonchul",
+        Person person = Person.of("won chul",
                                     "heo",
                                     LocalDate.of(1992, 7, 8));
         Assert.assertEquals(person, Person.getDefaultPerson());
+    }
+
+    @Test
+    public void test_hashSet() throws Exception {
+        Set<Person> personSet = new HashSet<>();
+        personSet.add(Person.getDefaultPerson());
+        personSet.add(Person.getDefaultPerson());
+        personSet.add(Person.getDefaultPerson());
+        personSet.add(Person.getDefaultPerson());
+
+        Assert.assertEquals(personSet.size(), 1);
     }
 }

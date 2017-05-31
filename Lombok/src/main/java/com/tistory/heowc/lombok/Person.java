@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class Person {
 
+    @Getter(AccessLevel.PRIVATE)
     private String firstName;
 
     private String lastName;
