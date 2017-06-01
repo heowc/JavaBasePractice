@@ -7,7 +7,8 @@ import java.time.LocalDate;
 @Setter
 @Getter
 @Builder
-@EqualsAndHashCode(exclude = {"address", "city"})
+@EqualsAndHashCode(of = {"firstName", "lastName", "dateOfBirth"})
+//@EqualsAndHashCode(exclude = {"address", "city"})
 @NoArgsConstructor
 @AllArgsConstructor
 public class Person {
