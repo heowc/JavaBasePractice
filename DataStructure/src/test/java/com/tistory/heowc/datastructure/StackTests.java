@@ -16,7 +16,7 @@ public class StackTests {
     }
 
     @Test
-    public void test_1push() {
+    public void test1_push() {
         STACK.push(new Node(1));
         STACK.push(new Node(2));
         STACK.push(new Node(3));
@@ -25,7 +25,7 @@ public class StackTests {
     }
 
     @Test
-    public void test_2pop() {
+    public void test2_pop() {
         STACK.pop();
         STACK.pop();
         STACK.pop();
@@ -34,7 +34,7 @@ public class StackTests {
     }
 
     @Test
-    public void test_3pop() {
+    public void test3_pop() {
         try {
             STACK.pop();
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -43,7 +43,7 @@ public class StackTests {
     }
 
     @Test
-    public void test_4push() {
+    public void test4_push() {
         try {
             STACK.push(new Node(1));
             STACK.push(new Node(2));

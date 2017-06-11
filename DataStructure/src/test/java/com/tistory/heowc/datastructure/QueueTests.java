@@ -5,6 +5,8 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import java.util.EmptyStackException;
+
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class QueueTests {
 
@@ -16,21 +18,21 @@ public class QueueTests {
     }
 
     @Test
-    public void test_1offer() throws Exception {
+    public void test1_offer() throws Exception {
         try {
-            QUEUE.offer(new Node(1));
-            QUEUE.offer(new Node(2));
-            QUEUE.offer(new Node(3));
-            QUEUE.offer(new Node(4));
-            QUEUE.offer(new Node(5));
-            QUEUE.offer(new Node(6));
+            QUEUE.offer(1);
+            QUEUE.offer(2);
+            QUEUE.offer(3);
+            QUEUE.offer(4);
+            QUEUE.offer(5);
+            QUEUE.offer(6);
         } catch (StackOverflowError e) {
             e.printStackTrace();
         }
     }
 
     @Test
-    public void test_2poll() throws Exception {
+    public void test2_poll() throws Exception {
         try {
             System.out.println(QUEUE.poll().idx);
             System.out.println(QUEUE.poll().idx);
@@ -38,7 +40,7 @@ public class QueueTests {
             System.out.println(QUEUE.poll().idx);
             System.out.println(QUEUE.poll().idx);
             System.out.println(QUEUE.poll().idx);
-        } catch (NullPointerException e) {
+        } catch (EmptyStackException e) {
             e.printStackTrace();
         }
     }

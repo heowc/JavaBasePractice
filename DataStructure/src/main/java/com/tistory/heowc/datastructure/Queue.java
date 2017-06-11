@@ -1,40 +1,39 @@
 package com.tistory.heowc.datastructure;
 
+import java.util.EmptyStackException;
+
 public class Queue {
 
     private final int maxSize;
     private int top = -1;
-    private Node [] nodeArray;
+
+    private QueueNode frontNode;
+    private QueueNode endNode;
 
     public Queue(int maxSize) {
         this.maxSize = maxSize;
-        nodeArray = new Node[maxSize];
     }
 
-    public void offer(Node node) {
-        if( isFull() ) throw new StackOverflowError("Custom Queue Overflow Exception");
-        nodeArray[++top] = node;
+    public void offer(int idx) {
+        QueueNode node = new QueueNode(idx);
+
+        if ( isEmpty() ) {
+            frontNode = node;
+            endNode = node;
+        } else {
+            endNode.nextNode = node;
+            endNode = node;
+        }
     }
 
-    public Node poll() {
-        if( isEmpty() ) throw new NullPointerException("Custom Queue NullPointer Exception");
-        return firstPollAndSort();
-    }
-
-    private boolean isFull() {
-        return (maxSize-1) == top;
+    public QueueNode poll() {
+        if( isEmpty() ) throw new EmptyStackException();
+        QueueNode node = frontNode;
+        frontNode = frontNode.nextNode;
+        return node;
     }
 
     private boolean isEmpty() {
-        return top == -1;
-    }
-    
-    private Node firstPollAndSort() {
-        Node node = nodeArray[0];
-        for (int i = 0; i < top; i ++) {
-            nodeArray[i] = nodeArray[i+1];
-        }
-        top--;
-        return node;
+        return frontNode == null;
     }
 }

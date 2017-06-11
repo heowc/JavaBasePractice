@@ -1,5 +1,7 @@
 package com.tistory.heowc.datastructure;
 
+import java.util.EmptyStackException;
+
 public class Stack {
 
     private final int maxSize;
@@ -19,7 +21,7 @@ public class Stack {
     }
 
     public Node pop() {
-        if ( isEmpty() ) throw new ArrayIndexOutOfBoundsException("Stack Underflow Exception");
+        if ( isEmpty() ) throw new EmptyStackException();
         return nodeArray[top--];
     }
 
