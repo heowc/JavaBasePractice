@@ -23,7 +23,6 @@ public class BreadthFirstSearch {
 
     private static int N = 6;
     private static int [][] MAP = new int[N][N];
-    private static int POSITION = 1;
     private static int MIN = N * N;
     private static Queue<Point> QUEUE = new LinkedList<>();
 
@@ -63,8 +62,6 @@ public class BreadthFirstSearch {
             if ( isLight(selectedPoint) ) {
                 QUEUE.offer(new Point(selectedPoint.x + 1, selectedPoint.y, selectedPoint.count + 1));
             }
-
-            POSITION++;
 
             // 마지막 위치
             if (selectedPoint.x == N - 1 && selectedPoint.y == N - 1) {
