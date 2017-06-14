@@ -34,12 +34,12 @@ public class QueueTests {
     @Test
     public void test2_poll() throws Exception {
         try {
-            System.out.println(QUEUE.poll().idx);
-            System.out.println(QUEUE.poll().idx);
-            System.out.println(QUEUE.poll().idx);
-            System.out.println(QUEUE.poll().idx);
-            System.out.println(QUEUE.poll().idx);
-            System.out.println(QUEUE.poll().idx);
+            System.out.println(QUEUE.poll());
+            System.out.println(QUEUE.poll());
+            System.out.println(QUEUE.poll());
+            System.out.println(QUEUE.poll());
+            System.out.println(QUEUE.poll());
+            System.out.println(QUEUE.poll());
         } catch (EmptyStackException e) {
             e.printStackTrace();
         }

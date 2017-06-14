@@ -26,11 +26,11 @@ public class Queue {
         }
     }
 
-    public QueueNode poll() {
+    public int poll() {
         if( isEmpty() ) throw new EmptyStackException();
         QueueNode node = frontNode;
         frontNode = frontNode.nextNode;
-        return node;
+        return node.idx;
     }
 
     private boolean isEmpty() {

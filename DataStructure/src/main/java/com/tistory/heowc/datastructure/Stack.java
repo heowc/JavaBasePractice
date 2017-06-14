@@ -15,14 +15,14 @@ public class Stack {
         this.nodeArray = new Node[maxSize];
     }
 
-    public void push(Node node) {
-        if ( isFull() ) throw new StackOverflowError("Custom Stack Overflow Exception");
-        nodeArray[++top] = node;
+    public void push(int data) {
+        if ( isFull() ) throw new StackOverflowError();
+        nodeArray[++top] = new Node(data);
     }
 
-    public Node pop() {
+    public int pop() {
         if ( isEmpty() ) throw new EmptyStackException();
-        return nodeArray[top--];
+        return nodeArray[top--].idx;
     }
 
     public boolean isEmpty() {
