@@ -18,11 +18,11 @@ public class BubbleSort {
 
         int temp;
 
-        for (int i = 0; i < size-1; i++) {
-            System.out.printf("%d번째 ==>", i);
+        for (int i = size-1; i > 0; i--) {
+            System.out.printf("%d번째 ==>", size-i);
             print();
 
-            for (int j = 0; j < size-1; j++) {
+            for (int j = 0; j < i; j++) {
                 if(array[j] > array[j+1]) {
                     temp = array[j];
                     array[j] = array[j+1];
