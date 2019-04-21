@@ -13,4 +13,5 @@ include 'Algorithm'
 findProject(':Algorithm')?.name = 'algorithm'
 include 'Sort'
 findProject(':Sort')?.name = 'sort'
-
+include 'CodeToolsJMH'
+findProject(':CodeToolsJMH')?.name = 'code-tools-jmh'
