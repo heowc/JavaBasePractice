@@ -9,7 +9,7 @@ import java.io.IOException;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-public class AddressBookTest {
+public class AddressBookProtosTest {
 
     private AddressBookProtos.AddressBook getAddressBook() {
         AddressBookProtos.Person john =

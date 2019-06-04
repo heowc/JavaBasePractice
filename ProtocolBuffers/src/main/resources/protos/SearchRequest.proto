@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option java_package = "com.example";
+option java_outer_classname = "SearchRequestProto";
+
+message SearchRequest {
+    reserved 4 to 9;
+    string keyword = 1;
+    int32 page = 2;
+    int32 size = 3;
+
+    enum Sort {
+        ASC = 0;
+        DESC = 1;
+    };
+
+    Sort sort = 10; // 4 to 9 x
+}
