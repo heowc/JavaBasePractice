@@ -48,13 +48,11 @@ public class GrpcServerApplication {
 
 class MessageSenderImpl extends MessageSenderGrpc.MessageSenderImplBase {
 
-    private static final Logger logger = Logger.getLogger(MessageSenderImpl.class.getName());
-
     @Override
     public void send(MessageSenderProto.MessageRequest request, StreamObserver<MessageSenderProto.MessageResponse> responseObserver) {
 
         try {
-            logger.fine(request.toString());
+            System.out.println(request.toString());
 
             MessageSenderProto.MessageResponse response = MessageSenderProto.MessageResponse.newBuilder()
                     .setStatus("success")
