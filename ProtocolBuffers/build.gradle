@@ -23,7 +23,6 @@ repositories {
 dependencies {
     implementation 'com.google.protobuf:protobuf-java:3.8.0'
     implementation 'com.google.protobuf:protobuf-java-util:3.8.0'
-    testImplementation group: 'junit', name: 'junit', version: '4.12'
 }
 
 sourceSets {
