@@ -1,15 +1,14 @@
 package com.example;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
-public class AddressBookProtosTest {
+class AddressBookProtosTest {
 
     private AddressBookProtos.AddressBook getAddressBook() {
         AddressBookProtos.Person john =
@@ -27,23 +26,23 @@ public class AddressBookProtosTest {
     }
 
     private void assertThatAll(AddressBookProtos.AddressBook addressBook) {
-        assertThat(addressBook.getPeopleList().size(), is(1));
-        assertThat(addressBook.getPeopleList().get(0).getId(), is(1234));
-        assertThat(addressBook.getPeopleList().get(0).getName(), is("John Doe"));
-        assertThat(addressBook.getPeopleList().get(0).getEmail(), is("jdoe@example.com"));
-        assertThat(addressBook.getPeopleList().get(0).getPhonesCount(), is(1));
-        assertThat(addressBook.getPeopleList().get(0).getPhones(0).getNumber(), is("555-4321"));
-        assertThat(addressBook.getPeopleList().get(0).getPhones(0).getTypeValue(), is(AddressBookProtos.Person.PhoneType.HOME.getNumber()));
+        assertThat(addressBook.getPeopleList().size()).isEquals(1);
+        assertThat(addressBook.getPeopleList().get(0).getId()).isEquals(1234);
+        assertThat(addressBook.getPeopleList().get(0).getName()).isEquals("John Doe");
+        assertThat(addressBook.getPeopleList().get(0).getEmail()).isEquals("jdoe@example.com");
+        assertThat(addressBook.getPeopleList().get(0).getPhonesCount()).isEquals(1);
+        assertThat(addressBook.getPeopleList().get(0).getPhones(0).getNumber()).isEquals("555-4321");
+        assertThat(addressBook.getPeopleList().get(0).getPhones(0).getTypeValue()).isEquals(AddressBookProtos.Person.PhoneType.HOME.getNumber());
     }
 
     @Test
-    public void simple() {
+    void simple() {
         AddressBookProtos.AddressBook addressBook = getAddressBook();
         assertThatAll(addressBook);
     }
 
     @Test
-    public void writeAndRead() throws IOException {
+    void writeAndRead() throws IOException {
         AddressBookProtos.AddressBook outputAddressBook = getAddressBook();
 
         ByteArrayOutputStream output = new ByteArrayOutputStream();

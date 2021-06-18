@@ -1,11 +1,10 @@
 package com.example;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
-public class SearchRequestProtoTest {
+class SearchRequestProtoTest {
 
     private SearchRequestProto.SearchRequest getSearchRequest() {
         return SearchRequestProto.SearchRequest.newBuilder()
@@ -20,10 +19,10 @@ public class SearchRequestProtoTest {
     public void simple() {
         SearchRequestProto.SearchRequest searchRequest = getSearchRequest();
 
-        assertThat(searchRequest.getKeyword(), is("keyword"));
-        assertThat(searchRequest.getPage(), is(1));
-        assertThat(searchRequest.getSize(), is(10));
-        assertThat(searchRequest.getSort(), is(SearchRequestProto.SearchRequest.Sort.ASC));
+        assertThat(searchRequest.getKeyword()).isEquals("keyword");
+        assertThat(searchRequest.getPage()).isEquals(1);
+        assertThat(searchRequest.getSize()).isEquals(10);
+        assertThat(searchRequest.getSort()).isEquals(SearchRequestProto.SearchRequest.Sort.ASC);
     }
 
 }

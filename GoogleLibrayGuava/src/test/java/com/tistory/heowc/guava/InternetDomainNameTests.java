@@ -1,29 +1,30 @@
 package com.tistory.heowc.guava;
 
 import com.google.common.net.InternetDomainName;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class InternetDomainNameTests {
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-    private InternetDomainName domainName;
+class InternetDomainNameTests {
 
-    @Before
-    public void before_init() {
-        domainName = InternetDomainName.from("heowc.tistory.com");
+	private InternetDomainName domainName;
 
-        System.out.println(domainName.toString());
-    }
+	@BeforeEach
+	void before_init() {
+		domainName = InternetDomainName.from("heowc.tistory.com");
 
-    @Test
-    public void test_topPrivateDomain() throws Exception {
-        Assert.assertEquals(domainName.topPrivateDomain().toString(), "tistory.com");
-    }
+		System.out.println(domainName.toString());
+	}
 
-    @Test
-    public void test_publicSuffix() throws Exception {
-        Assert.assertEquals(domainName.publicSuffix().toString(), "com");
-    }
+	@Test
+	void test_topPrivateDomain() throws Exception {
+		assertEquals(domainName.topPrivateDomain().toString(), "tistory.com");
+	}
+
+	@Test
+	void test_publicSuffix() throws Exception {
+		assertEquals(domainName.publicSuffix().toString(), "com");
+	}
 
 }

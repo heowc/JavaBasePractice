@@ -1,17 +1,17 @@
 package com.tistory.heowc.blockingqueue;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class ConcurrentLinkedQueueTests {
+class ConcurrentLinkedQueueTests {
 
-    private ConcurrentLinkedQueue<Integer> queue;
+	private ConcurrentLinkedQueue<Integer> queue;
 
-    @Before
-    public void before_init() {
-        queue = new ConcurrentLinkedQueue<>();
-    }
+	@BeforeEach
+	public void before_init() {
+		queue = new ConcurrentLinkedQueue<>();
+	}
 
 
 }

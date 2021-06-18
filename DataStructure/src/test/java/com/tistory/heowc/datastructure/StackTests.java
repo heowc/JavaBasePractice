@@ -1,55 +1,59 @@
 package com.tistory.heowc.datastructure;
 
-import org.junit.BeforeClass;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import java.util.EmptyStackException;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class StackTests {
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-    private static Stack STACK;
+@TestMethodOrder(MethodOrderer.MethodName.class)
+class StackTests {
 
-    @BeforeClass
-    public static void beforeClass_init() {
-        STACK = new Stack(5);
-    }
+	private static Stack STACK;
 
-    @Test
-    public void test1_push() {
-        STACK.push(1);
-        STACK.push(2);
-        STACK.push(3);
-        STACK.push(4);
-        STACK.push(5);
-    }
+	@BeforeAll
+	static void beforeClass_init() {
+		STACK = new Stack(5);
+	}
 
-    @Test
-    public void test2_pop() {
-        STACK.pop();
-        STACK.pop();
-        STACK.pop();
-        STACK.pop();
-        STACK.pop();
-    }
+	@Test
+	void test1_push() {
+		STACK.push(1);
+		STACK.push(2);
+		STACK.push(3);
+		STACK.push(4);
+		STACK.push(5);
+	}
 
-    @Test(expected = EmptyStackException.class)
-    public void test3_pop() {
-        STACK.pop();
-    }
+	@Test
+	void test2_pop() {
+		STACK.pop();
+		STACK.pop();
+		STACK.pop();
+		STACK.pop();
+		STACK.pop();
+	}
 
-    @Test
-    public void test4_push() {
-        try {
-            STACK.push(1);
-            STACK.push(2);
-            STACK.push(6);
-            STACK.push(4);
-            STACK.push(5);
-        } catch (StackOverflowError e) {
-            e.printStackTrace();
-        }
-    }
+	@Test
+	void test3_pop() {
+		assertThrows(EmptyStackException.class, () -> {
+			STACK.pop();
+		});
+	}
+
+	@Test
+	void test4_push() {
+		try {
+			STACK.push(1);
+			STACK.push(2);
+			STACK.push(6);
+			STACK.push(4);
+			STACK.push(5);
+		} catch (StackOverflowError e) {
+			e.printStackTrace();
+		}
+	}
 }

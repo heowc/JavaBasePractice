@@ -1,23 +1,24 @@
 package com.tistory.heowc.blockingqueue;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.SynchronousQueue;
 
-public class SynchronousQueueTests {
+import static org.assertj.core.api.Assertions.assertThat;
 
-    private SynchronousQueue<Integer> queue;
+class SynchronousQueueTests {
 
-    @Before
-    public void before_init() {
-        queue = new SynchronousQueue<>(); // default is false
-    }
+	private SynchronousQueue<Integer> queue;
 
-    @Test
-    public void test_offer() throws Exception {
-        // This queue does not have buffer
-        Assert.assertFalse("Queue full", queue.offer(1));
-    }
+	@BeforeEach
+	void before_init() {
+		queue = new SynchronousQueue<>(); // default is false
+	}
+
+	@Test
+	void test_offer() throws Exception {
+		// This queue does not have buffer
+		assertThat(queue.offer(1)).isFalse().as("Queue full");
+	}
 }

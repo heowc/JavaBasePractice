@@ -14,8 +14,6 @@ plugins {
 
 version 'unspecified'
 
-sourceCompatibility = 1.8
-
 repositories {
     mavenCentral()
 }

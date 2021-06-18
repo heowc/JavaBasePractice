@@ -1,98 +1,98 @@
 package com.tistory.heowc.blockingqueue;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.stream.IntStream;
 
-public class ArrayBlockingQueueTests {
+import static org.assertj.core.api.Assertions.assertThat;
 
-    private ArrayBlockingQueue<String> queue;
+class ArrayBlockingQueueTests {
 
-    @Before
-    public void before_init() {
-        queue = new ArrayBlockingQueue<>(10);
-    }
+	private ArrayBlockingQueue<String> queue;
 
-    @Test
-    public void test_add() throws Exception {
-        IntStream.range(0, 11)
-                .forEach(value -> {
-                    try {
-                        queue.add(String.valueOf(value));
-                    } catch (IllegalStateException e) {
-                        e.printStackTrace(); // Queue full
-                    }
-                });
+	@BeforeEach
+	void before_init() {
+		queue = new ArrayBlockingQueue<>(10);
+	}
 
-        Assert.assertEquals("Queue full", queue.remainingCapacity(), 0);
-    }
+	@Test
+	void test_add() throws Exception {
+		IntStream.range(0, 11)
+				.forEach(value -> {
+					try {
+						queue.add(String.valueOf(value));
+					} catch (IllegalStateException e) {
+						e.printStackTrace(); // Queue full
+					}
+				});
 
-    @Test
-    public void test_offer() throws Exception {
-        IntStream.range(0, 11)
-                .forEach(value -> {
-                    boolean isOffer = queue.offer(String.valueOf(value));
+		assertThat(queue.remainingCapacity()).isZero();
+	}
 
-                    if ( !isOffer ) {
-                        System.out.println("Queue full");
-                    }
-                });
+	@Test
+	void test_offer() throws Exception {
+		IntStream.range(0, 11)
+				.forEach(value -> {
+					boolean isOffer = queue.offer(String.valueOf(value));
 
-        Assert.assertEquals("Queue full", queue.remainingCapacity(), 0);
-    }
+					if (!isOffer) {
+						System.out.println("Queue full");
+					}
+				});
 
-    @Test
-    public void test_put() throws Exception {
-        IntStream.range(0, 10)
-                .forEach(value -> {
-                    try {
-                        queue.put(String.valueOf(value));
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                });
-        // queue 이상으로 넣을 시, wait
+		assertThat(queue.remainingCapacity()).isZero();
+	}
 
-        Assert.assertEquals("Queue full", queue.remainingCapacity(), 0);
-    }
+	@Test
+	void test_put() throws Exception {
+		IntStream.range(0, 10)
+				.forEach(value -> {
+					try {
+						queue.put(String.valueOf(value));
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				});
+		// queue 이상으로 넣을 시, wait
 
-    @Test
-    public void test_take() throws Exception {
-        IntStream.range(0, 1)
-                .forEach(value -> queue.offer(String.valueOf(value)));
-        // queue가 빌 때 take 할 경우, wait
-        Assert.assertEquals("Queue take is 0", queue.take(), "0");
-    }
+		assertThat(queue.remainingCapacity()).isZero();
+	}
 
-    @Test
-    public void test_poll() throws Exception {
-        Assert.assertEquals("Queue poll is null", queue.poll(), null);
-    }
+	@Test
+	void test_take() throws Exception {
+		IntStream.range(0, 1)
+				.forEach(value -> queue.offer(String.valueOf(value)));
+		// queue가 빌 때 take 할 경우, wait
+		assertThat(queue.take()).isEqualTo("0");
+	}
 
-    @Test
-    public void test_remove() throws Exception {
-        Assert.assertEquals("Queue remove is false", queue.remove("1"), false);
-    }
+	@Test
+	void test_poll() throws Exception {
+		assertThat(queue.poll()).isNull();
+	}
+
+	@Test
+	void test_remove() throws Exception {
+		assertThat(queue.remove("1")).isFalse();
+	}
 
 
-    @Test
-    public void test_drainTo() throws Exception {
-        queue.offer("1");
-        queue.offer("1");
-        queue.offer("2");
-        queue.offer("3");
-        queue.offer("4");
-        queue.offer("5");
+	@Test
+	void test_drainTo() throws Exception {
+		queue.offer("1");
+		queue.offer("1");
+		queue.offer("2");
+		queue.offer("3");
+		queue.offer("4");
+		queue.offer("5");
 
-        Set<String> removeSet = new HashSet<>();
-        removeSet.add("1");
+		Set<String> removeSet = new HashSet<>();
+		removeSet.add("1");
 
-        Assert.assertEquals("Queue drainTo count is 2",
-                queue.drainTo(removeSet, 2), 2);
-    }
+		assertThat(queue.drainTo(removeSet, 2)).isEqualTo(2);
+	}
 }
