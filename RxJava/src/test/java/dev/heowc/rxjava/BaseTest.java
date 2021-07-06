@@ -7,6 +7,11 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 class BaseTest {
 
 	private static final Logger logger = LoggerFactory.getLogger(BaseTest.class);
@@ -63,5 +68,38 @@ class BaseTest {
 				.subscribe(subscriber);
 
 		subscriber.await().assertResult("rxjava", "3");
+	}
+
+	/*
+		[RxComputationThreadPool-1] INFO dev.heowc.rxjava.BaseTest - before flatMap - OnNextNotification[hello]
+		[RxComputationThreadPool-1] INFO dev.heowc.rxjava.BaseTest - before flatMap - OnNextNotification[rxjava]
+		[RxComputationThreadPool-1] INFO dev.heowc.rxjava.BaseTest - before flatMap - OnNextNotification[3]
+		[RxComputationThreadPool-1] INFO dev.heowc.rxjava.BaseTest - before flatMap - OnCompleteNotification
+		[RxComputationThreadPool-4] INFO dev.heowc.rxjava.BaseTest - after flatMap - OnNextNotification[3]
+		[RxComputationThreadPool-2] INFO dev.heowc.rxjava.BaseTest - after flatMap - OnNextNotification[HELLO]
+		[RxComputationThreadPool-2] INFO dev.heowc.rxjava.BaseTest - after flatMap - OnNextNotification[RXJAVA]
+		[RxComputationThreadPool-2] INFO dev.heowc.rxjava.BaseTest - after flatMap - OnCompleteNotification
+	 */
+	@Test
+	void flatMap() throws InterruptedException {
+		final TestSubscriber<String> subscriber = new TestSubscriber<>();
+
+		/*
+			flatMap - 순서보장 X, 성능 O
+			concatMap - 순서보장 O, 성능 X
+			concatMapEager - 순서보장 O, 성능 O / But, 버퍼를 활용한 OOM 여지 있음
+			concatMap.... -
+		 */
+
+		Flowable.just("hello", "rxjava", "3").delay(1, TimeUnit.SECONDS)
+				.doOnEach(it -> logger.info("before flatMap - {}", it))
+				.flatMap(it -> Flowable.just(it.toUpperCase()).delay(1, TimeUnit.SECONDS))
+				.doOnEach(it -> logger.info("after flatMap - {}", it))
+				.subscribe(subscriber);
+
+		final List<String> actual = subscriber.awaitDone(2100, TimeUnit.MILLISECONDS)
+											  .assertValueCount(3)
+											  .values();
+		assertThat(actual).contains("HELLO", "RXJAVA", "3");
 	}
 }
