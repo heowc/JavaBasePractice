@@ -98,8 +98,50 @@ class BaseTest {
 				.subscribe(subscriber);
 
 		final List<String> actual = subscriber.awaitDone(2100, TimeUnit.MILLISECONDS)
-											  .assertValueCount(3)
-											  .values();
+				.assertValueCount(3)
+				.values();
 		assertThat(actual).contains("HELLO", "RXJAVA", "3");
+	}
+
+	/*
+		[RxComputationThreadPool-5] INFO dev.heowc.rxjava.BaseTest - before map - OnNextNotification[hello]
+		[RxComputationThreadPool-2] INFO dev.heowc.rxjava.BaseTest - before map - OnNextNotification[hello]
+		[RxComputationThreadPool-5] INFO dev.heowc.rxjava.BaseTest - before map - OnNextNotification[rxjava]
+		[RxComputationThreadPool-5] INFO dev.heowc.rxjava.BaseTest - before map - OnNextNotification[3]
+		[RxComputationThreadPool-2] INFO dev.heowc.rxjava.BaseTest - before map - OnNextNotification[rxjava]
+		[RxComputationThreadPool-4] INFO dev.heowc.rxjava.BaseTest - after map - OnNextNotification[HELLO]
+		[RxComputationThreadPool-1] INFO dev.heowc.rxjava.BaseTest - after map - OnNextNotification[HELLO]
+		[RxComputationThreadPool-2] INFO dev.heowc.rxjava.BaseTest - before map - OnNextNotification[3]
+		[RxComputationThreadPool-5] INFO dev.heowc.rxjava.BaseTest - before map - OnCompleteNotification
+		[RxComputationThreadPool-4] INFO dev.heowc.rxjava.BaseTest - subscribe 2 - HELLO
+		[RxComputationThreadPool-1] INFO dev.heowc.rxjava.BaseTest - subscribe 1 - HELLO
+		[RxComputationThreadPool-2] INFO dev.heowc.rxjava.BaseTest - before map - OnCompleteNotification
+		[RxComputationThreadPool-4] INFO dev.heowc.rxjava.BaseTest - after map - OnNextNotification[RXJAVA]
+		[RxComputationThreadPool-1] INFO dev.heowc.rxjava.BaseTest - after map - OnNextNotification[RXJAVA]
+		[RxComputationThreadPool-4] INFO dev.heowc.rxjava.BaseTest - subscribe 2 - RXJAVA
+		[RxComputationThreadPool-1] INFO dev.heowc.rxjava.BaseTest - subscribe 1 - RXJAVA
+		[RxComputationThreadPool-1] INFO dev.heowc.rxjava.BaseTest - after map - OnNextNotification[3]
+		[RxComputationThreadPool-4] INFO dev.heowc.rxjava.BaseTest - after map - OnNextNotification[3]
+		[RxComputationThreadPool-1] INFO dev.heowc.rxjava.BaseTest - subscribe 1 - 3
+		[RxComputationThreadPool-4] INFO dev.heowc.rxjava.BaseTest - subscribe 2 - 3
+		[RxComputationThreadPool-1] INFO dev.heowc.rxjava.BaseTest - after map - OnCompleteNotification
+		[RxComputationThreadPool-4] INFO dev.heowc.rxjava.BaseTest - after map - OnCompleteNotification
+	 */
+	@Test
+	void observeOn() throws InterruptedException {
+		final Flowable<String> flowable = Flowable.just("hello", "rxjava", "3").delay(1, TimeUnit.SECONDS)
+				.observeOn(Schedulers.computation())
+				.doOnEach(it -> logger.info("before map - {}", it))
+				.map(String::toUpperCase)
+				.observeOn(Schedulers.computation())
+				.doOnEach(it -> logger.info("after map - {}", it));
+		flowable.subscribe(data -> {
+			logger.info("subscribe 1 - {}", data);
+		});
+		flowable.subscribe(data -> {
+			logger.info("subscribe 2 - {}", data);
+		});
+
+		Thread.sleep(2000L);
 	}
 }
