@@ -1,0 +1,29 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
+plugins {
+    id 'nebula.facet' version '9.0.0'
+
+    id 'idea'
+    id 'eclipse'
+}
+
+dependencies {
+
+}
+
+facets {
+    integTest {
+        parentSourceSet = 'test'
+        testTaskName = 'integrationTest'
+//        includeInCheckLifecycle = false
+    }
+}
+
+integrationTest {
+    description "Runs the integration tests."
+    useJUnitPlatform()
+}
