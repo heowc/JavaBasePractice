@@ -135,7 +135,7 @@ class BaseTest {
 				.map(String::toUpperCase)
 				.observeOn(Schedulers.computation())
 				.doOnEach(it -> logger.info("after map - {}", it));
-		flowable.subscribe(data -> {
+		flowable.subscribe(data -> {ㄲ
 			logger.info("subscribe 1 - {}", data);
 		});
 		flowable.subscribe(data -> {
@@ -143,5 +143,35 @@ class BaseTest {
 		});
 
 		Thread.sleep(2000L);
+	}
+
+	@Test
+	void map() throws InterruptedException {
+//		final TestSubscriber<String> subscriber = new TestSubscriber<>();
+
+		/*
+			flatMap - 순서보장 X, 성능 O
+			concatMap - 순서보장 O, 성능 X
+			concatMapEager - 순서보장 O, 성능 O / But, 버퍼를 활용한 OOM 여지 있음
+			concatMap.... -
+		 */
+
+		final Flowable<String> flowable = Flowable.just("hello", "rxjava", "3").delay(1, TimeUnit.SECONDS)
+				.doOnEach(it -> logger.info("before flatMap - {}", it))
+//				.flatMap(it -> Flowable.just(it.toUpperCase()).delay(1, TimeUnit.SECONDS))
+				.map(String::toUpperCase)
+				.doOnEach(it -> logger.info("after flatMap - {}", it))
+				.observeOn(Schedulers.io());
+//				.subscribe(subscriber);
+
+		flowable.subscribe(data -> logger.info("1 subscribe - {}", data));
+		flowable.subscribe(data -> logger.info("2 subscribe - {}", data));
+
+//		final List<String> actual = subscriber.awaitDone(2100, TimeUnit.MILLISECONDS)
+//				.assertValueCount(3)
+//				.values();
+//		assertThat(actual).contains("HELLO", "RXJAVA", "3");
+
+		Thread.sleep(3000);
 	}
 }
