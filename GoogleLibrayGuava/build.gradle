@@ -10,5 +10,5 @@ repositories {
 }
 
 dependencies {
-    compile group: 'com.google.guava', name: 'guava', version: '21.0'
+    implementation group: 'com.google.guava', name: 'guava', version: '21.0'
 }

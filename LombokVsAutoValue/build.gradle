@@ -10,10 +10,15 @@ repositories {
 
 ext {
     lombokVersion = '1.18.22'
+    autoValueVersion = '1.8.2'
 }
 
 dependencies {
     implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    compile "com.google.auto.value:auto-value-annotations:${autoValueVersion}"
+    annotationProcessor "com.google.auto.value:auto-value:${autoValueVersion}"
 }
