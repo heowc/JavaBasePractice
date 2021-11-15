@@ -78,7 +78,7 @@ class ArticleTest {
     }
 
 
-    @DisplayName(" effective java 3rd에서 권장사항으로 만든 article은 id,title 중 하나라도 다르면 hashCode가 다르다.")
+    @DisplayName("effective java 3rd에서 권장사항으로 만든 article은 id,title 중 하나라도 다르면 hashCode가 다르다.")
     @ParameterizedTest
     @CsvSource({
             "2,effective,test",
@@ -92,6 +92,27 @@ class ArticleTest {
         assertThat(effective.hashCode()).isNotEqualTo(otherEffective.hashCode());
     }
 
+    @DisplayName("record로 만든 article은 id와 title이 같으면 hashCode가 같다.")
+    @Test
+    void recordTest() {
+        final RecordArticle record = new RecordArticle(1L, "record", "test");
+        final RecordArticle otherRecord = new RecordArticle(1L, "record", "test");
+        assertThat(record.hashCode()).isEqualTo(otherRecord.hashCode());
+    }
+
+
+    @ParameterizedTest
+    @DisplayName("record로 만든 article은 id,title 중 하나라도 다르면 hashCode가 다르다.")
+    @CsvSource({
+            "2,record,test",
+            "1,record2,test2",
+            "2,record2,test3"
+    })
+    void recordTest(Long id, String title, String content) {
+        final RecordArticle record = new RecordArticle(1L, "record", "test");
+        final RecordArticle otherRecord = new RecordArticle(id, title, content);
+        assertThat(record.hashCode()).isNotEqualTo(otherRecord.hashCode());
+    }
 
     @Test
     void test() {
