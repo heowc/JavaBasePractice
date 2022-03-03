@@ -1,0 +1,17 @@
+version 'unspecified'
+
+apply plugin: 'java'
+
+sourceCompatibility = 11
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    lombokVersion = '1.18.22'
+}
+
+dependencies {
+    implementation 'net.lingala.zip4j:zip4j:2.9.1'
+}
